@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: guestbook
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: guestbook
+  template:
+    metadata:
+      labels:
+        app: guestbook
+    spec:
+      containers:
+      - name: nginx 
+        image: ghcr.io/krancovia/guestbook:placeholder
+        volumeMounts:
+        - name: content
+          mountPath: /usr/share/nginx/html
+          readOnly: true
+      volumes:
+      - name: content
+        configMap:
+          name: guestbook-content
